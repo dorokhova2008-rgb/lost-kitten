@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const users =[
+            {id: 1, name: "Anna", age: 22, city: "Moscow", isActive: true},
+            { id: 2, name: "Oleg", age: 17, city: "Kazan", isActive: false },
+            { id: 3, name: "Ivan", age: 30, city: "Moscow", isActive: true },
+            { id: 4, name: "Maria", age: 25, city: "Sochi", isActive: false }
+        ];
+        function getActiveUsers(users) {
+            return users.filter(user => user.isActive);
+        }
+        console.log(" Активные пользователи:", getActiveUsers(users));
+
+        const getUserNames = (users) => {
+            return users.map(user => user.name);
+        }
+        console.log("Имена пользователей:", getUserNames(users));
+
+        function findUserById(users, id) {
+            const user = users.find(user => user.id === id);
+            return user || null;
+        }
+        console.log("Поиск пользователя с id=2:", findUserById(users, 2));
+
+        function getUsersStatistics(users) {
+            const total = users.length;
+            const active = users.filter(user => user.isActive).length;
+            const inactive = total - active;
+            return {
+                    total,
+                    active,
+                    inactive
+            };
+        }
+        console.log("Статистика пользователей:", getUsersStatistics(users));
+
+        function getAverageAge(users) {
+            if (users.length === 0) return 0;
+            const totalAge = users.reduce((sum, user) => sum + user.age, 0);
+            return totalAge / users.length;
+        }
+        console.log("Средний возраст:", getAverageAge(users));
+
+         function groupUsersByCity(users) {
+            return users.reduce((result, user) => {
+                if (!result[user.city]) {
+                    result[user.city] = [];
+                }
+                result[user.city].push(user);
+                return result;
+            }, {});
+        }
+        console.log("Группировка по городам:", groupUsersByCity(users));
+    
+    <script>
+</body>
+</html>
