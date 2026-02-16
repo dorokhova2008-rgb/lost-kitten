@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const tracker = { 
+            expenses: [],
+            currentId: 1,
+
+        addExpense(title, amount, category) {
+            if (!title || !amount || !category) {
+                console.log("Некорректный ввод");
+                return;
+            }
+            if (amount <= 0) {
+                console.log("Сумма должна быть больше 0");
+                return;
+            }
+            const expense = {
+            id: this.currentId++,
+            title: title,
+            amount: amount,
+            category: category
+            }
+
+            this.expenses.push(expense);
+        },
+
+        allExpenses() {
+            if (this.expenses.length === 0) {
+                console.log("Расходов нет");
+                return;
+            }
+
+            for (let exps of this.expenses) {
+                console.log("ID:", exps.id, "|", exps.title, "|", exps.amount, "руб |", exps.category);
+            }
+        },
+
+        getTotalAmount() {
+            let total = 0;
+            for (let exps of this.expenses) {
+                total += exps.amount
+            }
+
+            console.log("Общая сумма расходов:", total, "руб");
+            return total;
+        },
+
+        getExpensesByCategory(category) {
+            let total = 0;
+            for (let exps of this.expenses) {
+                if (exps.category === category) {
+                    console.log(exps);
+                    total += exps.amount;
+                }
+        }
+            console.log("Потрачено на", category + ":", total, "руб");
+        },
+
+        findExpenseByTitle(text) {
+            for (let exps of this.expenses) {
+                if (exps.title.includes(text)) {
+                    return exps;
+                }
+            }
+            return null;
+        },
+
+        deleteById(id) {
+            this.expenses = this.expenses.filter(exps => exps.id !== id);
+        },
+
+        statistics() {
+            const stats = this.expenses.reduce(function(result, exps) {
+                if (!result[exps.category]) {
+                    result[exps.category] = 0;
+                }
+                result[exps.category] += exps.amount;
+                return result;
+        }, {});
+
+        console.log("Статистика:");
+        for (let category in stats) {
+            console.log(category + ": " + stats[category] + " руб");
+        }
+        }
+    };
+    tracker.addExpense("Техника", 200000, "Эпл");
+    tracker.addExpense("Такси", 1000, "Транспорт");
+    tracker.allExpenses();
+    tracker.getTotalAmount();
+    tracker.getExpensesByCategory("Эпл");
+    tracker.statistics();
+    </script> 
+</body>
+</html>
